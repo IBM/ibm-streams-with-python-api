@@ -1,7 +1,25 @@
-!!! WORK IN PROGRESS
-
 # Create an IBM Streams application using Python API in a Jupyter Notebook
 
+The Python API [streamsx](https://pypi.org/project/streamsx/) allows developers to build streaming applications that are executed using IBM Streams, a service that runs on IBM Cloud Pak for Data. The Cloud Pak for Data platform provides additional support, such as integration with multiple data sources, built-in analytics, Jupyter notebooks, and machine learning. Scalability is increased by distributing processes  across multiple computing resources.
+
+> **NOTE**: The IBM Streams service is also available on IBM Cloud, and has the product name [IBM Streaming Analytics](https://cloud.ibm.com/catalog/services/streaming-analytics).
+
+In this code pattern, we will create a Jupyter notebook that contains Python code that utilizes the `streamsx` API to build a streaming application. The application will process a stream of data containing mouse click events from users as they browse a shopping web site.
+
+Note that the `streamsx` package comes with additional adapters for external systems, such as Kafka, databases, and geospatial analytics, but we will just focus on the core service.
+
+The notebook will cover all of the steps to building a simple IBM Streams  application. This includes:
+
+* Create a `Toplogy` object that will contain the stream.
+* Define the `Source` of our data. In this example, we are using click stream data generated from a shopping website.
+* Add the data source to a stream.
+* Create a `Filter` so that we only see clicks associated with adding items to a shopping cart.
+* Create a function that computes the running total cost of the items for each customer. The function is executed every second.
+* Results are printed out with the customer ID and the cost of the items in the cart.
+* Create a `View` object so that we can see the results of our stream application.
+* Use the `Publish` function so that other applications can use our stream.
+
+The application is started by `submitting` the `topology`, which will then create a running `job`. The streams `job` can then be assigned a `View` object that can be used to see the output in real-time.
 
 ## Flow
 
@@ -9,7 +27,7 @@
 
 1. User runs Jupyter Notebook in IBM Cloud Pak for Data
 1. Clickstream data is inserted into streaming app
-1. Streaming app is run in IBM Streams service
+1. Streaming app using the `streamsx` Python API is executed in the IBM Streams service
 1. User accesses IBM Streams service job to view events
 
 ## Incuded components
@@ -157,7 +175,7 @@ The `View` object can then be used to see output in real-time from the streams `
 
 ### 7. View job status in Streams service panel
 
-To view your steams job in the services panel, from the IBM Cloud Pak for Data main menu, click on `My Instances` and then the `Jobs` tab.
+From the IBM Cloud Pak for Data main menu, click on `My Instances` and then the `Jobs` tab.
 
 ![job-list](doc/source/images/job-list.png)
 
@@ -169,7 +187,7 @@ Select `View graph` from the context menu action for the running job.
 
 ### 8. Cancel the job
 
-To cancel the job from your notebook, in `Section 5`, a button is created which you can click to cancel the job.
+In `Section 5` of the notebook, a button is created which you can click to cancel the job.
 
 ![cancel-job](doc/source/images/cancel-job.png)
 
