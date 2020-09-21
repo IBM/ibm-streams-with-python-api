@@ -28,7 +28,7 @@ The application is started by `submitting` the `topology`, which will then creat
 1. User runs Jupyter Notebook in IBM Cloud Pak for Data
 1. Clickstream data is inserted into streaming app
 1. Streaming app using the `streamsx` Python API is executed in the IBM Streams service
-1. User accesses IBM Streams service job to view events
+1. User can optionally access the IBM Streams service job to view events
 
 ## Incuded components
 
@@ -160,18 +160,16 @@ Ensure that the file name matches your project data asset name.
 
 The notebook covers all of the steps to building a simple streams application. This includes:
 
-* Create a `Toplogy` object that will contain the stream.
-* Define the `Source` of our data. In this example, we are using click stream data generated from a shopping website.
-* Add the data source to a stream.
-* Create a `Filter` so that we only see clicks associated with adding items to a shopping cart.
-* Create a function that computes the running total cost of the items for each customer. The function is executed every second.
-* For each customer reading, the result is printed out with the customer ID and the cost of the items in the cart.
-* Create a `View` object so that we can see the results of our stream application.
+* Create a `Topology` object that will contain the stream.
+* Define the incoming data source. In this example, we are using click stream data generated from a shopping website.
+* Use the incoming data to create a source `Stream`.
+* Filter the data on the `Stream` so that we only see clicks associated with adding items to a shopping cart.
+* Create a function that computes the running total cost of the items for each customer for the last 30 seconds. The function is executed every second.
+* Results are printed out with the customer ID and the cost of the items in the cart.
+* Create a `View` object so that we can see the results of our streams application.
 * Use the `Publish` function so that other applications can use our stream.
 
-The application is started by `submitting` the `topology`. The submitted streams application is referred to as a `job` when it is running.
-
-The `View` object can then be used to see output in real-time from the streams `job`.
+The application is started by `submitting` the `Topology`, which will then create a running job. Once the job is running, you can use the `View` object created earlier to see the running totals as they are calculated.
 
 ### 7. View job status in Streams service panel
 
